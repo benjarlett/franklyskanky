@@ -4,7 +4,7 @@
 
 	let { data }: { data: PageData } = $props();
 
-	let pageTitle = $derived(`${data.page.title} - Dee Jarlett`);
+	let pageTitle = $derived(`${data.page.title} - Frankly Skanky`);
 	let pageDescription = $derived(data.page.description ?? '');
 	let ogImage = $derived(data.page.ogImage ?? '/img/og-default.webp');
 </script>
@@ -19,7 +19,7 @@
 		<meta property="og:description" content={pageDescription} />
 	{/if}
 	<meta property="og:url" content="https://franklyskanky.co.uk/{data.page.slug}" />
-	<meta property="og:site_name" content="Dee Jarlett" />
+	<meta property="og:site_name" content="Frankly Skanky" />
 </svelte:head>
 
 {#if data.page.blocks && data.page.blocks.length > 0}

@@ -31,7 +31,7 @@
 				Link.configure({
 					openOnClick: false,
 					HTMLAttributes: {
-						class: 'text-accent underline'
+						style: 'color:#1d4ed8; text-decoration:underline;'
 					}
 				}),
 				Image.configure({
@@ -123,7 +123,7 @@
 
 <div class="rounded-md border border-border/20">
 	<!-- Toolbar -->
-	<div class="flex flex-wrap gap-1 border-b border-border/20 bg-background/50 p-2">
+	<div class="flex flex-wrap gap-1 border-b border-border/20 p-2" style="background:#f3f3f3;">
 		<!-- Headings -->
 		<button
 			type="button"
@@ -258,12 +258,13 @@
 	<input bind:this={fileInput} type="file" accept="image/jpeg,image/png,image/webp,image/gif" onchange={handleImageUpload} class="hidden" />
 
 	<!-- Editor (always in DOM, hidden when source view active) -->
-	<div bind:this={element} class="bg-background {showSource ? 'hidden' : ''}"></div>
+	<div bind:this={element} class="{showSource ? 'hidden' : ''}" style="background:#ffffff; color:#111111;"></div>
 
 	<!-- Source view -->
 	{#if showSource}
 		<textarea
-			class="min-h-50 w-full resize-y bg-background p-3 font-mono text-sm text-foreground focus:outline-none"
+			class="min-h-50 w-full resize-y p-3 font-mono text-sm focus:outline-none"
+			style="background:#ffffff; color:#111111;"
 			value={sourceContent}
 			oninput={handleSourceInput}
 			spellcheck="false"

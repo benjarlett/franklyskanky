@@ -19,7 +19,7 @@
 		</a>
 	</div>
 
-	<div class="rounded-lg border border-border/20 bg-background/95">
+	<div class="rounded-lg border border-border/20" style="background:#ffffff; color:#111111;">
 		<table class="w-full">
 			<thead>
 				<tr class="border-b border-border/20 text-left">
@@ -36,7 +36,7 @@
 						<td class="px-4 py-3">
 							<a
 								href="/admin/pages/{page.slug}"
-								class="font-medium text-foreground hover:text-primary"
+								style="color:#1d4ed8; font-weight:500;"
 							>
 								{page.title}
 							</a>
@@ -65,7 +65,7 @@
 						<td class="px-4 py-3 text-right">
 							<a
 								href="/admin/pages/{page.slug}"
-								class="text-sm text-primary hover:text-primary/80"
+								style="color:#1d4ed8; font-size:0.875rem;"
 							>
 								Edit
 							</a>

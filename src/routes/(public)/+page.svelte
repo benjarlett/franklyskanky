@@ -5,7 +5,7 @@
 
 	let { data }: { data: PageData } = $props();
 
-	let pageTitle = $derived(`${data.page.title} - Dee Jarlett`);
+	let pageTitle = $derived(`${data.page.title} - Frankly Skanky`);
 	let pageDescription = $derived(data.page.description ?? '');
 </script>
 
@@ -19,7 +19,7 @@
 		<meta property="og:description" content={pageDescription} />
 	{/if}
 	<meta property="og:url" content="https://franklyskanky.co.uk" />
-	<meta property="og:site_name" content="Dee Jarlett" />
+	<meta property="og:site_name" content="Frankly Skanky" />
 </svelte:head>
 
 <div class="home-layout">
@@ -30,12 +30,15 @@
 	</div>
 
 	{#if data.homeMenu.length > 0}
-		<nav class="home-sidebar" aria-label="Explore the site">
-			{#each data.homeMenu as item (item.id)}
-				<a href={resolve(item.href)} class="home-sidebar-link">
-					{item.label}
-				</a>
-			{/each}
-		</nav>
+		<div class="home-sidebar-wrap">
+			<nav class="home-sidebar" aria-label="Explore the site">
+				{#each data.homeMenu as item (item.id)}
+					<a href={resolve(item.href)} class="home-sidebar-link">
+						{item.label}
+					</a>
+				{/each}
+			</nav>
+			<img src="/dice.png" alt="Lion of Judah" class="home-sidebar-lion" />
+		</div>
 	{/if}
 </div>

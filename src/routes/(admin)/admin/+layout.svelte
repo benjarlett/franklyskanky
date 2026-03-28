@@ -17,19 +17,18 @@
 {#if isLoginPage}
 	{@render children()}
 {:else}
-	<div class="min-h-screen bg-background">
+	<div class="min-h-screen" style="background:#ffffff; color:#111111;">
 		<!-- Admin Header -->
-		<header class="sticky top-0 z-50 border-b border-border/20 bg-background/95 backdrop-blur-sm">
+		<header class="sticky top-0 z-50 border-b" style="background:#ffffff; border-color:#dddddd;">
 			<div class="container flex h-14 items-center justify-between">
 				<div class="flex items-center gap-6">
-					<a href="/admin" class="text-xl font-bold text-primary">Admin</a>
+					<a href="/admin" class="text-xl font-bold" style="color:#1d4ed8;">Admin</a>
 					<nav class="flex gap-1">
 						{#each navLinks as link}
 							<a
 								href={link.href}
-								class="rounded-md px-3 py-1.5 text-sm font-medium transition-colors {isActive(link.href)
-									? 'bg-primary text-primary-foreground'
-									: 'text-muted-foreground hover:bg-accent hover:text-foreground'}"
+								class="rounded-md px-3 py-1.5 text-sm font-medium transition-colors"
+								style={isActive(link.href) ? 'background:#1d4ed8; color:#ffffff;' : 'color:#555555;'}
 							>
 								{link.label}
 							</a>
@@ -38,7 +37,7 @@
 				</div>
 
 				<div class="flex items-center gap-4">
-					<a href="/" class="text-sm text-muted-foreground hover:text-foreground" target="_blank">
+					<a href="/" class="text-sm" style="color:#1d4ed8;" target="_blank">
 						View Site &rarr;
 					</a>
 					<form method="POST" action="/admin/logout">

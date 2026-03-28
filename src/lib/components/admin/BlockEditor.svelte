@@ -126,7 +126,7 @@
 	<!-- Block list -->
 	{#each blocks as block, index (block.id)}
 		{@const isExpanded = expandedId === block.id}
-		<div class="group relative rounded-lg border border-border/20 bg-background/95 {isExpanded ? 'ring-1 ring-primary/20' : ''}">
+		<div class="group relative rounded-lg border border-border/20 {isExpanded ? 'ring-1 ring-primary/20' : ''}" style="background:#ffffff; color:#111111;">
 			<!-- Block header — always visible, clickable to toggle -->
 			<!-- svelte-ignore a11y_no_static_element_interactions -->
 			<div

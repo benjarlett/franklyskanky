@@ -10,7 +10,6 @@
 	let saving = $state(false);
 	let isDirty = $state(false);
 
-	// Sync from server data (on load and after save) — mirrors pattern in page editor
 	$effect(() => {
 		const incoming = data.items;
 		items = incoming.map((i) => ({ id: i.id, label: i.label, href: i.href, parentId: i.parentId }));
@@ -36,11 +35,8 @@
 		isDirty = true;
 	}
 
-	function markDirty() {
-		isDirty = true;
-	}
+	function markDirty() { isDirty = true; }
 
-	// Check if an href matches a known page
 	function isPageHref(href: string) {
 		return data.pages.some((p) => hrefForSlug(p.slug) === href);
 	}
@@ -65,24 +61,24 @@
 
 <div class="space-y-6">
 	<div class="flex items-center justify-between">
-		<h1 class="text-2xl font-bold text-primary">Menu</h1>
+		<h1 class="text-2xl font-bold" style="color:#111111;">Menu</h1>
 		<button
 			type="button"
 			onclick={addItem}
-			class="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+			class="rounded-md px-4 py-2 text-sm font-medium"
+			style="background:#1d4ed8; color:#ffffff;"
 		>
 			+ Add Item
 		</button>
 	</div>
 
 	<!-- Location tabs -->
-	<nav class="flex gap-1 border-b border-border/30">
+	<nav class="flex gap-1 border-b" style="border-color:#dddddd;">
 		{#each data.locations as loc (loc.value)}
 			<a
 				href="?location={loc.value}"
-				class="px-4 py-2 text-sm font-medium transition-colors rounded-t-md {data.location === loc.value
-					? 'bg-primary text-primary-foreground'
-					: 'text-muted-foreground hover:text-foreground hover:bg-muted'}"
+				class="px-4 py-2 text-sm font-medium rounded-t-md"
+				style={data.location === loc.value ? 'background:#1d4ed8; color:#ffffff;' : 'color:#555555;'}
 			>
 				{loc.label}
 			</a>
@@ -90,13 +86,13 @@
 	</nav>
 
 	{#if form?.success}
-		<div class="rounded-md bg-green-500/10 px-4 py-3 text-sm text-green-500">
+		<div class="rounded-md px-4 py-3 text-sm" style="background:#dcfce7; color:#166534;">
 			Menu saved successfully!
 		</div>
 	{/if}
 
 	{#if form?.error}
-		<div class="rounded-md bg-destructive/10 px-4 py-3 text-sm text-destructive">
+		<div class="rounded-md px-4 py-3 text-sm" style="background:#fee2e2; color:#991b1b;">
 			{form.error}
 		</div>
 	{/if}
@@ -119,21 +115,23 @@
 
 	<div class="space-y-2">
 		{#each items as item, i (i)}
-			<div class="flex items-center gap-3 rounded-lg border border-border/20 bg-background/95 px-4 py-3">
+			<div class="flex items-center gap-3 rounded-lg border px-4 py-3" style="background:#ffffff; border-color:#dddddd;">
 				<!-- Reorder buttons -->
 				<div class="flex flex-col gap-0.5">
 					<button
 						type="button"
 						onclick={() => moveItem(i, -1)}
 						disabled={i === 0}
-						class="text-xs text-muted-foreground hover:text-foreground disabled:opacity-20"
+						class="text-xs disabled:opacity-20"
+						style="color:#555555;"
 						aria-label="Move up"
 					>▲</button>
 					<button
 						type="button"
 						onclick={() => moveItem(i, 1)}
 						disabled={i === items.length - 1}
-						class="text-xs text-muted-foreground hover:text-foreground disabled:opacity-20"
+						class="text-xs disabled:opacity-20"
+						style="color:#555555;"
 						aria-label="Move down"
 					>▼</button>
 				</div>
@@ -145,7 +143,8 @@
 						bind:value={item.label}
 						oninput={markDirty}
 						placeholder="Label"
-						class="w-full rounded-md border border-border bg-background px-3 py-1.5 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+						class="w-full rounded-md border px-3 py-1.5 text-sm focus:outline-none"
+						style="background:#ffffff; color:#111111; border-color:#cccccc;"
 					/>
 				</div>
 
@@ -154,7 +153,8 @@
 					<select
 						value={isPageHref(item.href) ? item.href : '__custom__'}
 						onchange={(e) => handleHrefSelect(item, e.currentTarget.value)}
-						class="w-full rounded-md border border-border bg-background px-3 py-1.5 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+						class="w-full rounded-md border px-3 py-1.5 text-sm focus:outline-none"
+						style="background:#ffffff; color:#111111; border-color:#cccccc;"
 					>
 						{#each data.pages as p}
 							<option value={hrefForSlug(p.slug)}>{p.title}</option>
@@ -169,7 +169,8 @@
 							bind:value={item.href}
 							oninput={markDirty}
 							placeholder="https://... or /custom-path"
-							class="w-full rounded-md border border-border bg-background px-3 py-1.5 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+							class="w-full rounded-md border px-3 py-1.5 text-sm focus:outline-none"
+							style="background:#ffffff; color:#111111; border-color:#cccccc;"
 						/>
 					</div>
 				{/if}
@@ -179,7 +180,8 @@
 					<select
 						bind:value={item.parentId}
 						onchange={markDirty}
-						class="w-full rounded-md border border-border bg-background px-2 py-1.5 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+						class="w-full rounded-md border px-2 py-1.5 text-sm focus:outline-none"
+						style="background:#ffffff; color:#111111; border-color:#cccccc;"
 					>
 						<option value={null}>Top level</option>
 						{#each items as parent, pi (pi)}
@@ -194,26 +196,27 @@
 				<button
 					type="button"
 					onclick={() => removeItem(i)}
-					class="text-sm text-destructive hover:text-destructive/80"
+					class="text-sm"
+					style="color:#dc2626;"
 					aria-label="Remove item"
 				>✕</button>
 			</div>
 		{/each}
 
 		{#if items.length === 0}
-			<div class="rounded-lg border border-border/20 bg-background/95 px-4 py-12 text-center text-muted-foreground">
+			<div class="rounded-lg border px-4 py-12 text-center" style="background:#f9f9f9; border-color:#dddddd; color:#666666;">
 				No menu items yet. Add your first item!
 			</div>
 		{/if}
 	</div>
 
-	<!-- Save button -->
 	<div class="sticky bottom-4 flex justify-end">
 		<button
 			type="submit"
 			form="menu-form"
 			disabled={!isDirty || saving}
-			class="rounded-lg bg-primary px-6 py-2 font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
+			class="rounded-lg px-6 py-2 font-medium disabled:opacity-50"
+			style="background:#cc0000; color:#ffffff;"
 		>
 			{#if saving}
 				Saving...
