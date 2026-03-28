@@ -28,7 +28,7 @@
 				value={block.url}
 				oninput={(e) => onUpdate({ url: (e.target as HTMLInputElement).value })}
 				placeholder="Upload an image or paste a URL"
-				class="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground"
+				class="w-full rounded-md border px-3 py-2 text-sm" style="background:#ffffff; color:#111111; border-color:#cccccc;"
 			/>
 		</div>
 		<div>
@@ -38,7 +38,7 @@
 				value={block.alt}
 				oninput={(e) => onUpdate({ alt: (e.target as HTMLInputElement).value })}
 				placeholder="Describe the image for accessibility"
-				class="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground"
+				class="w-full rounded-md border px-3 py-2 text-sm" style="background:#ffffff; color:#111111; border-color:#cccccc;"
 			/>
 		</div>
 		<div>
@@ -51,7 +51,7 @@
 					onUpdate({ caption: val || undefined });
 				}}
 				placeholder="Optional caption below the image"
-				class="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground"
+				class="w-full rounded-md border px-3 py-2 text-sm" style="background:#ffffff; color:#111111; border-color:#cccccc;"
 			/>
 		</div>
 	</div>

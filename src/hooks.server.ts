@@ -2,6 +2,7 @@ import type { Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import * as auth from '$lib/server/auth';
 import { isAllowedEmail } from '$lib/server/admin-auth';
+import { env } from '$env/dynamic/private';
 
 const handleAuth: Handle = async ({ event, resolve }) => {
 	const sessionToken = event.cookies.get(auth.sessionCookieName);
@@ -33,7 +34,8 @@ const handleAdminAuth: Handle = async ({ event, resolve }) => {
 		!event.url.pathname.startsWith('/admin/login')
 	) {
 		const user = event.locals.user;
-		const isAdmin = !!user && isAllowedEmail(user.email);
+		const adminEmail = env.ADMIN_USER ? `${env.ADMIN_USER}@admin.local` : null;
+		const isAdmin = !!user && (isAllowedEmail(user.email) || (adminEmail && user.email === adminEmail));
 		event.locals.isAdmin = isAdmin;
 
 		if (!isAdmin) {

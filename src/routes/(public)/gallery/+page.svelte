@@ -1,33 +1,20 @@
 <script lang="ts">
-	let lightbox = $state<string | null>(null);
+	import type { PageData } from './$types';
+	import type { ImageBlock } from '$lib/server/db/schema';
 
-	const images = [
-		'/images/473621504_2986767608156238_2022304001310573614_n.jpg',
-		'/images/484249459_1228936505902142_4526354981268671193_n.jpg',
-		'/images/49413424_1169080719924945_1676532546894036992_n.jpg',
-		'/images/49508065_1164207747078909_8363052699775664128_n.jpg',
-		'/images/49649147_1169080679924949_2807150896218112000_n.jpg',
-		'/images/49661457_1169080746591609_640672510538416128_n.jpg',
-		'/images/49897506_1169080696591614_6404834323341508608_n.jpg',
-		'/images/502670255_3120825464750451_6267678451213978914_n.jpg',
-		'/images/505863528_3135451153287882_3123194817141562095_n.jpg',
-		'/images/69479179_1326632740836408_6566398602036379648_n.jpg',
-		'/images/71170083_1352573964908952_2753780043460116480_n.jpg',
-	];
+	let { data }: { data: PageData } = $props();
 
-	function openLightbox(src: string) { lightbox = src; }
+	const images = (data.page.blocks ?? []).filter((b): b is ImageBlock => b.type === 'image');
+	let lightbox = $state<number | null>(null);
+
+	function openLightbox(i: number) { lightbox = i; }
 	function closeLightbox() { lightbox = null; }
 
 	function handleKey(e: KeyboardEvent) {
+		if (lightbox === null) return;
 		if (e.key === 'Escape') closeLightbox();
-		if (e.key === 'ArrowRight') {
-			const i = images.indexOf(lightbox!);
-			if (i < images.length - 1) lightbox = images[i + 1];
-		}
-		if (e.key === 'ArrowLeft') {
-			const i = images.indexOf(lightbox!);
-			if (i > 0) lightbox = images[i - 1];
-		}
+		if (e.key === 'ArrowRight' && lightbox < images.length - 1) lightbox++;
+		if (e.key === 'ArrowLeft' && lightbox > 0) lightbox--;
 	}
 </script>
 
@@ -41,26 +28,29 @@
 <h1>Gallery</h1>
 
 <div class="gallery-grid">
-	{#each images as src}
-		<button class="gallery-item" onclick={() => openLightbox(src)} aria-label="View image">
-			<img {src} alt="Frankly Skanky" loading="lazy" />
+	{#each images as img, i}
+		<button class="gallery-item" onclick={() => openLightbox(i)} aria-label={img.alt || 'View image'}>
+			<img src={img.url} alt={img.alt || 'Frankly Skanky'} loading="lazy" />
 		</button>
 	{/each}
 </div>
 
-{#if lightbox}
+{#if lightbox !== null}
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div class="lightbox" onclick={closeLightbox} role="dialog" aria-modal="true">
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<div class="lightbox-inner" onclick={(e) => e.stopPropagation()}>
-			<img src={lightbox} alt="Frankly Skanky" />
+			<img src={images[lightbox].url} alt={images[lightbox].alt || 'Frankly Skanky'} />
+			{#if images[lightbox].caption}
+				<p class="lightbox-caption">{images[lightbox].caption}</p>
+			{/if}
 			<div class="lightbox-controls">
-				{#if images.indexOf(lightbox) > 0}
-					<button onclick={() => lightbox = images[images.indexOf(lightbox!) - 1]}>← Prev</button>
+				{#if lightbox > 0}
+					<button onclick={() => lightbox!--}>← Prev</button>
 				{/if}
 				<button class="lightbox-close" onclick={closeLightbox}>✕ Close</button>
-				{#if images.indexOf(lightbox) < images.length - 1}
-					<button onclick={() => lightbox = images[images.indexOf(lightbox!) + 1]}>Next →</button>
+				{#if lightbox < images.length - 1}
+					<button onclick={() => lightbox!++}>Next →</button>
 				{/if}
 			</div>
 		</div>
@@ -100,7 +90,6 @@
 		opacity: 0.9;
 	}
 
-	/* Lightbox */
 	.lightbox {
 		position: fixed;
 		inset: 0;
@@ -123,9 +112,16 @@
 
 	.lightbox-inner img {
 		max-width: 100%;
-		max-height: 75vh;
+		max-height: 72vh;
 		object-fit: contain;
 		display: block;
+	}
+
+	.lightbox-caption {
+		color: rgba(255,255,255,0.7);
+		font-size: 1rem;
+		margin: 0;
+		text-align: center;
 	}
 
 	.lightbox-controls {
@@ -143,11 +139,9 @@
 		cursor: pointer;
 		background: #cc0000;
 		color: #ffffff;
-		letter-spacing: 0.03em;
 	}
 
 	.lightbox-controls button:hover { background: #ff0000; }
-
 	.lightbox-close { background: #333333; }
 	.lightbox-close:hover { background: #555555; }
 </style>
