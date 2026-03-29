@@ -4,13 +4,11 @@
 	let { block }: { block: YouTubeBlockType } = $props();
 
 	let loaded = $state(false);
-	const thumb = `https://i.ytimg.com/vi/${block.videoId}/maxresdefault.jpg`;
-	const thumbFallback = `https://i.ytimg.com/vi/${block.videoId}/hqdefault.jpg`;
-
-	function handleThumbError(e: Event) {
-		const img = e.target as HTMLImageElement;
-		if (!img.src.includes('hqdefault')) img.src = thumbFallback;
-	}
+	// Videos that have maxresdefault confirmed available
+	const maxresIds = ['po5nxfdSiHI', 'ZJwEny72-bI', 'rK5BbQI9wAw'];
+	const thumb = maxresIds.includes(block.videoId)
+		? `https://i.ytimg.com/vi/${block.videoId}/maxresdefault.jpg`
+		: `https://i.ytimg.com/vi/${block.videoId}/hqdefault.jpg`;
 </script>
 
 <div class="video-container">
@@ -26,7 +24,7 @@
 		></iframe>
 	{:else}
 		<button class="yt-facade" onclick={() => loaded = true} aria-label="Play video">
-			<img src={thumb} alt={block.caption ?? 'YouTube video'} width="560" height="315" loading="lazy" onerror={handleThumbError} />
+			<img src={thumb} alt={block.caption ?? 'YouTube video'} width="560" height="315" loading="lazy" />
 			<span class="yt-play">▶</span>
 		</button>
 	{/if}
