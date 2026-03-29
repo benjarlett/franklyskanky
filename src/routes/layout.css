@@ -140,6 +140,12 @@
 	transition: opacity 0.2s;
 }
 
+@media (min-width: 900px) {
+	.site-logo img {
+		height: 117px;
+	}
+}
+
 .site-logo img:hover {
 	opacity: 0.85;
 }
@@ -171,6 +177,15 @@
 	font-size: 1.125rem;
 	color: rgba(255, 255, 255, 0.65);
 	letter-spacing: 0.04em;
+}
+
+@media (min-width: 900px) {
+	.site-name { font-size: 2.9rem; }
+	.site-tagline { font-size: 1.45rem; }
+}
+
+.hide-tagline .site-tagline {
+	display: none;
 }
 
 /* Hamburger toggle — hidden at 900px+ on home page only */

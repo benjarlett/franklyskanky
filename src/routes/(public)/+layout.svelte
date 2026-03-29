@@ -29,7 +29,7 @@
 <!-- Fixed background -->
 <div class="fixed-bg"></div>
 
-<header class="site-bar {isHome ? 'is-home' : ''}" aria-label="Main menu">
+<header class="site-bar {isHome ? 'is-home' : ''}" aria-label="Main menu" class:hide-tagline={isHome}>
 	<div class="site-bar-inner">
 		<div class="site-bar-brand">
 			<a href={resolve('/')} class="site-logo">
