@@ -33,7 +33,7 @@
 	<div class="site-bar-inner">
 		<div class="site-bar-brand">
 			<a href={resolve('/')} class="site-logo">
-				<img src="/frankly-logo.jpg" alt="Frankly Skanky" />
+				<img src="/frankly-logo-small.jpg" alt="Frankly Skanky" width="160" height="156" />
 			</a>
 			<div class="site-bar-text">
 				<span class="site-name">Frankly Skanky</span>
