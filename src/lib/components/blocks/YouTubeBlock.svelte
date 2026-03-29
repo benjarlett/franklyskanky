@@ -5,6 +5,12 @@
 
 	let loaded = $state(false);
 	const thumb = `https://i.ytimg.com/vi/${block.videoId}/maxresdefault.jpg`;
+	const thumbFallback = `https://i.ytimg.com/vi/${block.videoId}/hqdefault.jpg`;
+
+	function handleThumbError(e: Event) {
+		const img = e.target as HTMLImageElement;
+		if (!img.src.includes('hqdefault')) img.src = thumbFallback;
+	}
 </script>
 
 <div class="video-container">
@@ -20,7 +26,7 @@
 		></iframe>
 	{:else}
 		<button class="yt-facade" onclick={() => loaded = true} aria-label="Play video">
-			<img src={thumb} alt={block.caption ?? 'YouTube video'} width="560" height="315" loading="lazy" />
+			<img src={thumb} alt={block.caption ?? 'YouTube video'} width="560" height="315" loading="lazy" onerror={handleThumbError} />
 			<span class="yt-play">▶</span>
 		</button>
 	{/if}
