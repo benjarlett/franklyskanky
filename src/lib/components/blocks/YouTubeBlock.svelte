@@ -4,36 +4,47 @@
 	let { block }: { block: YouTubeBlockType } = $props();
 
 	let loaded = $state(false);
-	// Videos that have maxresdefault confirmed available
 	const maxresIds = ['po5nxfdSiHI', 'ZJwEny72-bI', 'rK5BbQI9wAw'];
-	const thumb = maxresIds.includes(block.videoId)
+	const isHighRes = maxresIds.includes(block.videoId);
+	const thumb = isHighRes
 		? `https://i.ytimg.com/vi/${block.videoId}/maxresdefault.jpg`
 		: `https://i.ytimg.com/vi/${block.videoId}/hqdefault.jpg`;
 </script>
 
-<div class="video-container">
-	{#if loaded}
-		<iframe
-			width="560"
-			height="315"
-			src="https://www.youtube-nocookie.com/embed/{block.videoId}?autoplay=1"
-			title={block.caption ?? 'YouTube video'}
-			frameborder="0"
-			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-			allowfullscreen
-		></iframe>
-	{:else}
-		<button class="yt-facade" onclick={() => loaded = true} aria-label="Play video">
-			<img src={thumb} alt={block.caption ?? 'YouTube video'} width="560" height="315" loading="lazy" />
-			<span class="yt-play">▶</span>
-		</button>
+<div class="yt-wrap" class:yt-compact={!isHighRes}>
+	<div class="video-container">
+		{#if loaded}
+			<iframe
+				width="560"
+				height="315"
+				src="https://www.youtube-nocookie.com/embed/{block.videoId}?autoplay=1"
+				title={block.caption ?? 'YouTube video'}
+				frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+				allowfullscreen
+			></iframe>
+		{:else}
+			<button class="yt-facade" onclick={() => loaded = true} aria-label="Play video">
+				<img src={thumb} alt={block.caption ?? 'YouTube video'} width="560" height="315" loading="lazy" />
+				<span class="yt-play">▶</span>
+			</button>
+		{/if}
+	</div>
+	{#if block.caption}
+		<p class="yt-caption">{block.caption}</p>
 	{/if}
 </div>
-{#if block.caption}
-	<p class="yt-caption">{block.caption}</p>
-{/if}
 
 <style>
+	.yt-wrap {
+		margin: 1.5rem 0;
+	}
+
+	/* Compact videos pair up into a 2-column grid with siblings */
+	.yt-compact {
+		display: contents;
+	}
+
 	.yt-facade {
 		all: unset;
 		display: block;
@@ -56,11 +67,11 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		width: 68px;
-		height: 48px;
+		width: 56px;
+		height: 40px;
 		background: #cc0000;
 		color: #ffffff;
-		font-size: 1.5rem;
+		font-size: 1.25rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -72,9 +83,10 @@
 	}
 
 	.yt-caption {
-		font-size: 0.9rem;
+		font-size: 0.85rem;
 		color: #666666;
 		text-align: center;
-		margin-top: 0.5rem;
+		margin-top: 0.4rem;
+		line-height: 1.4;
 	}
 </style>

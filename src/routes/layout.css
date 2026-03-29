@@ -475,7 +475,6 @@
 	padding-bottom: 56.25%;
 	height: 0;
 	overflow: hidden;
-	margin: 1.5rem 0;
 }
 
 .video-container iframe {
@@ -485,6 +484,35 @@
 	width: 100%;
 	height: 100%;
 	border: 0;
+}
+
+/* Compact (low-res) videos flow into a 2-col grid */
+.content-card {
+	container-type: inline-size;
+}
+
+.prose-content:has(.yt-compact) {
+	display: grid;
+	grid-template-columns: 1fr;
+}
+
+.prose-content .yt-wrap:not(.yt-compact) {
+	grid-column: 1 / -1;
+}
+
+/* 2-column grid for compact videos at wider widths */
+@container (min-width: 480px) {
+	.prose-content {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.prose-content .yt-wrap:not(.yt-compact) {
+		grid-column: 1 / -1;
+	}
+
+	.prose-content > :not(.yt-wrap) {
+		grid-column: 1 / -1;
+	}
 }
 
 /* === SOCIAL ICONS === */
