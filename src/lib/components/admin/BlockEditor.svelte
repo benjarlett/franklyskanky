@@ -7,6 +7,7 @@
 	import ImageBlockEditor from './editors/ImageBlockEditor.svelte';
 	import YouTubeBlockEditor from './editors/YouTubeBlockEditor.svelte';
 	import NewsfeedBlockEditor from './editors/NewsfeedBlockEditor.svelte';
+	import FacebookVideoBlockEditor from './editors/FacebookVideoBlockEditor.svelte';
 
 	let {
 		initialBlocks = [],
@@ -50,6 +51,8 @@
 				return { id, type: 'youtube', videoId: '', caption: '' };
 			case 'newsfeed':
 				return { id, type: 'newsfeed', posts: [] };
+			case 'facebookvideo':
+				return { id, type: 'facebookvideo', url: '' };
 		}
 	};
 
@@ -77,6 +80,8 @@
 				return block.alt || block.url || 'No image set';
 			case 'youtube':
 				return block.videoId ? `Video: ${block.videoId}` : 'No video set';
+			case 'facebookvideo':
+				return block.url ? block.url : 'No URL set';
 			default:
 				return '';
 		}
@@ -122,7 +127,8 @@
 		hr: 'Divider',
 		image: 'Image',
 		youtube: 'YouTube',
-		newsfeed: 'News Feed'
+		newsfeed: 'News Feed',
+		facebookvideo: 'Facebook Video'
 	};
 </script>
 
@@ -216,6 +222,11 @@
 							{block}
 							onUpdate={(updates) => updateBlock(index, updates)}
 						/>
+					{:else if block.type === 'facebookvideo'}
+						<FacebookVideoBlockEditor
+							{block}
+							onUpdate={(updates) => updateBlock(index, updates)}
+						/>
 					{/if}
 				</div>
 			{/if}
@@ -279,6 +290,13 @@
 			class="rounded-md bg-accent/10 px-3 py-1.5 text-sm text-foreground hover:bg-accent/20"
 		>
 			+ News Feed
+		</button>
+		<button
+			type="button"
+			onclick={() => addBlock('facebookvideo')}
+			class="rounded-md bg-accent/10 px-3 py-1.5 text-sm text-foreground hover:bg-accent/20"
+		>
+			+ Facebook Video
 		</button>
 	</div>
 

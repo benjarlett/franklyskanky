@@ -8,6 +8,7 @@
 	import ImageBlock from './ImageBlock.svelte';
 	import YouTubeBlock from './YouTubeBlock.svelte';
 	import NewsfeedBlock from './NewsfeedBlock.svelte';
+	import FacebookVideoBlock from './FacebookVideoBlock.svelte';
 
 	let { blocks }: { blocks: Block[] } = $props();
 </script>
@@ -29,5 +30,7 @@
 		<YouTubeBlock {block} />
 	{:else if block.type === 'newsfeed'}
 		<NewsfeedBlock {block} />
+	{:else if block.type === 'facebookvideo'}
+		<FacebookVideoBlock {block} />
 	{/if}
 {/each}

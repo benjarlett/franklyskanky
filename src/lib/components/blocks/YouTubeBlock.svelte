@@ -40,11 +40,6 @@
 		margin: 1.5rem 0;
 	}
 
-	/* Compact videos pair up into a 2-column grid with siblings */
-	.yt-compact {
-		display: contents;
-	}
-
 	.yt-facade {
 		all: unset;
 		display: block;
