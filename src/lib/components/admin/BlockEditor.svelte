@@ -6,6 +6,7 @@
 	import CTABlockEditor from './editors/CTABlockEditor.svelte';
 	import ImageBlockEditor from './editors/ImageBlockEditor.svelte';
 	import YouTubeBlockEditor from './editors/YouTubeBlockEditor.svelte';
+	import NewsfeedBlockEditor from './editors/NewsfeedBlockEditor.svelte';
 
 	let {
 		initialBlocks = [],
@@ -47,6 +48,8 @@
 				return { id, type: 'image', url: '', alt: '' };
 			case 'youtube':
 				return { id, type: 'youtube', videoId: '', caption: '' };
+			case 'newsfeed':
+				return { id, type: 'newsfeed', posts: [] };
 		}
 	};
 
@@ -118,7 +121,8 @@
 		cta: 'CTA Links',
 		hr: 'Divider',
 		image: 'Image',
-		youtube: 'YouTube'
+		youtube: 'YouTube',
+		newsfeed: 'News Feed'
 	};
 </script>
 
@@ -207,6 +211,11 @@
 							{block}
 							onUpdate={(updates) => updateBlock(index, updates)}
 						/>
+					{:else if block.type === 'newsfeed'}
+						<NewsfeedBlockEditor
+							{block}
+							onUpdate={(updates) => updateBlock(index, updates)}
+						/>
 					{/if}
 				</div>
 			{/if}
@@ -263,6 +272,13 @@
 			class="rounded-md bg-accent/10 px-3 py-1.5 text-sm text-foreground hover:bg-accent/20"
 		>
 			+ YouTube
+		</button>
+		<button
+			type="button"
+			onclick={() => addBlock('newsfeed')}
+			class="rounded-md bg-accent/10 px-3 py-1.5 text-sm text-foreground hover:bg-accent/20"
+		>
+			+ News Feed
 		</button>
 	</div>
 

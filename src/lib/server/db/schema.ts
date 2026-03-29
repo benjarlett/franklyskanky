@@ -4,7 +4,7 @@ import { pgTable, text, timestamp, boolean, jsonb, serial, integer } from 'drizz
 // Block Types for Content Editor
 // ============================================
 
-export type BlockType = 'text' | 'section' | 'quote' | 'cta' | 'hr' | 'image' | 'youtube';
+export type BlockType = 'text' | 'section' | 'quote' | 'cta' | 'hr' | 'image' | 'youtube' | 'newsfeed';
 
 export interface BaseBlock {
 	id: string;
@@ -57,6 +57,18 @@ export interface YouTubeBlock extends BaseBlock {
 	caption?: string;
 }
 
+export interface NewsfeedPost {
+	id: string;
+	title: string;
+	body: string;
+	date: string; // ISO date string
+}
+
+export interface NewsfeedBlock extends BaseBlock {
+	type: 'newsfeed';
+	posts: NewsfeedPost[];
+}
+
 export type Block =
 	| TextBlock
 	| SectionBlock
@@ -64,7 +76,8 @@ export type Block =
 	| CTABlock
 	| HRBlock
 	| ImageBlock
-	| YouTubeBlock;
+	| YouTubeBlock
+	| NewsfeedBlock;
 
 // Helper to create a new block with UUID
 export function createBlock<T extends Block>(type: T['type'], data: Omit<T, 'id' | 'type'>): T {

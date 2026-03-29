@@ -7,6 +7,7 @@
 	import HRBlock from './HRBlock.svelte';
 	import ImageBlock from './ImageBlock.svelte';
 	import YouTubeBlock from './YouTubeBlock.svelte';
+	import NewsfeedBlock from './NewsfeedBlock.svelte';
 
 	let { blocks }: { blocks: Block[] } = $props();
 </script>
@@ -26,5 +27,7 @@
 		<ImageBlock {block} />
 	{:else if block.type === 'youtube'}
 		<YouTubeBlock {block} />
+	{:else if block.type === 'newsfeed'}
+		<NewsfeedBlock {block} />
 	{/if}
 {/each}
