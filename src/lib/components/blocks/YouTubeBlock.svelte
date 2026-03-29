@@ -4,7 +4,7 @@
 	let { block }: { block: YouTubeBlockType } = $props();
 
 	let loaded = $state(false);
-	const thumb = `https://i.ytimg.com/vi/${block.videoId}/hqdefault.jpg`;
+	const thumb = `https://i.ytimg.com/vi/${block.videoId}/maxresdefault.jpg`;
 </script>
 
 <div class="video-container">
